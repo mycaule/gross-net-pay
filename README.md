@@ -1,5 +1,5 @@
 # Gross Net Pay
-Calculate Net Pay from Gross Pay and /vice versa/.
+Calculate Net Pay from Gross Pay and *vice versa*.
 
 Made just for fun using AngularJS. [Use it here!](http://mycaule.github.io/gross-pay/)
 
