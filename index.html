@@ -1,0 +1,59 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+</head>
+
+<body>
+
+<div ng-app="" ng-controller="salaryController">
+  <p>Monthly Net: <input type="number" ng-model="monthlyNet" ng-change="netToGross(1)"></p>
+  <p>Monthly Gross: <input type="number" ng-model="monthlyGross" ng-change="grossToNet(1)"></p>
+  <p>Annual Net: <input type="number" ng-model="annualNet" ng-change="netToGross(12)"></p>
+  <p>Annual Gross: <input type="number" ng-model="annualGross" ng-change="grossToNet(12)"></p>
+  <p>Tax Rate: <input type="number" min="0" max="100" ng-model="tax_rate" ng-change="grossToNet(0)"></p>
+</div>
+
+<script>
+	function salaryController ($scope) {
+		$scope.tax_rate = 23;
+		$scope.monthlyGross = 1000;
+		$scope.factor = 1 + $scope.tax_rate/100;
+		$scope.monthlyNet = $scope.monthlyGross / $scope.factor;
+		$scope.annualGross = $scope.monthlyGross * 12;
+		$scope.annualNet = $scope.monthlyNet * 12;
+
+		$scope.grossToNet = function (type) {
+			if (type === 1) {
+				$scope.monthlyNet = $scope.monthlyGross / $scope.factor;
+				$scope.annualNet = $scope.monthlyNet * 12;
+				$scope.annualGross = $scope.monthlyGross * 12;
+			} else if (type === 12) {
+				$scope.annualNet = $scope.annualGross / $scope.factor;
+				$scope.monthlyGross = $scope.annualGross / 12;
+				$scope.monthlyNet = $scope.annualNet / 12;
+			} else {
+				$scope.factor = 1 + $scope.tax_rate / 100;
+				$scope.monthlyGross = $scope.annualGross / 12;
+				$scope.annualNet = $scope.annualGross / $scope.factor;
+				$scope.monthlyNet = $scope.monthlyGross / $scope.factor;
+			}
+		};
+
+		$scope.netToGross = function (type) {
+			if (type === 1) {
+				$scope.monthlyGross = $scope.monthlyNet * $scope.factor;
+				$scope.annualGross = $scope.monthlyGross * 12;
+				$scope.annualNet = $scope.monthlyNet * 12;
+			} else if (type === 12) {
+				$scope.annualGross = $scope.annualNet * $scope.factor;
+				$scope.monthlyGross = $scope.annualGross / 12;
+				$scope.monthlyNet = $scope.annualNet / 12;
+			}
+		};
+	}
+</script>
+
+</body>
+</html> 
