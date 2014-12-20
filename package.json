@@ -1,0 +1,18 @@
+{
+  "name": "gross-net-pay",
+  "version": "0.1.0",
+  "description": "Calculate Net Pay from Gross Pay",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mycaule/gross-net-pay"
+  },
+  "author": "Michel Hua",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/mycaule/gross-net-pay/issues"
+  },
+  "homepage": "https://github.com/mycaule/gross-net-pay"
+}
