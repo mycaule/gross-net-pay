@@ -1,4 +1,7 @@
 # Gross Net Pay
+
+[![Build Status](https://travis-ci.org/mycaule/gross-net-pay.svg?branch=master)](https://travis-ci.org/mycaule/gross-net-pay)
+
 Calculate Net Pay from Gross Pay and *vice versa*.
 
 Made just for fun using AngularJS. [Use it here!](http://mycaule.github.io/gross-net-pay/)
