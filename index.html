@@ -1,59 +1,52 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+  <head>
+    <title>Calculate Net Pay from Gross Pay</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  </head>
 
-<head>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-</head>
+  <body>
+    <div ng-app="" ng-controller="salaryController">
+      <h4>Calculate Net Pay from Gross Pay</h4>
+      <table id="calc">
+        <tr>
+          <th scope="col">Pay</th>
+          <th scope="col">Gross</th>
+          <th scope="col">Net</th>
+        </tr>
+        <tr>
+          <td>by Hour</td>
+          <td><input ng-model='hg' ng-change="grossToNet('hour')"></td>
+          <td><input ng-model='hn' ng-change="netToGross('hour')"></td>
+        </tr>
+        <tr>
+          <td>by Month</td>
+          <td><input ng-model="mg" ng-change="grossToNet('month')"></td>
+          <td><input ng-model="mn" ng-change="netToGross('month')"></td>
+        </tr>
+        <tr>
+          <td>by Year</td>
+          <td><input ng-model="ag" ng-change="grossToNet('year')"></td>
+          <td><input ng-model="an" ng-change="netToGross('year')"></td>
+        </tr>
+      </table>
+      <h4>Parameters</h4>
+      <table id="params">
+        <tr>
+          <td>Hours per Week</td>
+          <td><input type="number" min="1" max="168" ng-model="hw" ng-change="grossToNet('all')"></td>
+        </tr>
+        <tr>
+          <td>Months per Year</td>
+          <td><input type="number" min="1" max="15" ng-model="my" ng-change="grossToNet('all')"></td>
+        </tr>
+        <tr>
+          <td>Tax Rate</td>
+          <td><input type="number" min="0" max="100" ng-model="tr" ng-change="grossToNet('all')"></td>
+        </tr>
+      </table>
+    </div>
 
-<body>
-
-<div ng-app="" ng-controller="salaryController">
-  <p>Monthly Net: <input type="number" ng-model="monthlyNet" ng-change="netToGross(1)"></p>
-  <p>Monthly Gross: <input type="number" ng-model="monthlyGross" ng-change="grossToNet(1)"></p>
-  <p>Annual Net: <input type="number" ng-model="annualNet" ng-change="netToGross(12)"></p>
-  <p>Annual Gross: <input type="number" ng-model="annualGross" ng-change="grossToNet(12)"></p>
-  <p>Tax Rate: <input type="number" min="0" max="100" ng-model="tax_rate" ng-change="grossToNet(0)"></p>
-</div>
-
-<script>
-	function salaryController ($scope) {
-		$scope.tax_rate = 23;
-		$scope.monthlyGross = 1000;
-		$scope.factor = 1 + $scope.tax_rate/100;
-		$scope.monthlyNet = $scope.monthlyGross / $scope.factor;
-		$scope.annualGross = $scope.monthlyGross * 12;
-		$scope.annualNet = $scope.monthlyNet * 12;
-
-		$scope.grossToNet = function (type) {
-			if (type === 1) {
-				$scope.monthlyNet = $scope.monthlyGross / $scope.factor;
-				$scope.annualNet = $scope.monthlyNet * 12;
-				$scope.annualGross = $scope.monthlyGross * 12;
-			} else if (type === 12) {
-				$scope.annualNet = $scope.annualGross / $scope.factor;
-				$scope.monthlyGross = $scope.annualGross / 12;
-				$scope.monthlyNet = $scope.annualNet / 12;
-			} else {
-				$scope.factor = 1 + $scope.tax_rate / 100;
-				$scope.monthlyGross = $scope.annualGross / 12;
-				$scope.annualNet = $scope.annualGross / $scope.factor;
-				$scope.monthlyNet = $scope.monthlyGross / $scope.factor;
-			}
-		};
-
-		$scope.netToGross = function (type) {
-			if (type === 1) {
-				$scope.monthlyGross = $scope.monthlyNet * $scope.factor;
-				$scope.annualGross = $scope.monthlyGross * 12;
-				$scope.annualNet = $scope.monthlyNet * 12;
-			} else if (type === 12) {
-				$scope.annualGross = $scope.annualNet * $scope.factor;
-				$scope.monthlyGross = $scope.annualGross / 12;
-				$scope.monthlyNet = $scope.annualNet / 12;
-			}
-		};
-	}
-</script>
-
-</body>
-</html> 
+    <script src="salaryController.js"></script>
+  </body>
+</html>
