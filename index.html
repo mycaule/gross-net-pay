@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <title>Calculate Net Pay from Gross Pay</title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
   </head>
 
-  <body>
-    <div ng-app="" ng-controller="salaryController">
+  <body ng-app="calculator">
+    <div class="container-fluid" ng-controller="salaryController">
       <h4>Calculate Net Pay from Gross Pay</h4>
       <table id="calc">
         <tr>

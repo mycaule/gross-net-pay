@@ -1,8 +1,10 @@
+'use strict';
+
 function formatSalary(number) {
   return Math.floor(number);
 }
 
-function salaryController ($scope) {
+function salaryController($scope) {
   // Default values
   $scope.mg = 2500;    // Gross Monthly Salary
   $scope.hw = 35;      // Number of hours worked by week
@@ -20,7 +22,7 @@ function salaryController ($scope) {
   $scope.hn = formatSalary($scope.hg*$scope.k);            // Gross Houryly Salary
 
   // TODO - Refactor
-  $scope.grossToNet = function (type) {
+  $scope.grossToNet = function(type) {
     if (type === 'hour') {
       $scope.hn = formatSalary($scope.hg*$scope.k); // Update Net
       $scope.mg = formatSalary($scope.hg*$scope.wm);
@@ -54,7 +56,7 @@ function salaryController ($scope) {
     }
   };
 
-  $scope.netToGross = function (type) {
+  $scope.netToGross = function(type) {
     if (type === 'hour') {
       $scope.hg = formatSalary($scope.hn/$scope.k); // Update Gross
       $scope.mg = formatSalary($scope.hg*$scope.wm);
@@ -79,3 +81,6 @@ function salaryController ($scope) {
     }
   };
 }
+
+var calculator = angular.module('calculator', []).
+    controller('salaryController', salaryController);
