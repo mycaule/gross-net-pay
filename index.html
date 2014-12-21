@@ -5,35 +5,37 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <title>Calculate Net Pay from Gross Pay</title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="http://cdn.mathjax.org/mathjax/2.4-latest/MathJax.js?config=TeX-AMS_HTML">
+    </script>
   </head>
-
   <body ng-app="calculator">
-    <div class="container-fluid" ng-controller="salaryController">
-      <h4>Calculate Net Pay from Gross Pay</h4>
-      <table id="calc">
+    <a href="https://github.com/mycaule/gross-net-pay"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+    <div class="container" ng-controller="salaryController">
+      <h2>Calculate Net Pay from Gross Pay</h2>
+      <table id="calc" class="table table-condensed">
         <tr>
-          <th scope="col">Pay</th>
+          <th scope="col">Pay by</th>
           <th scope="col">Gross</th>
           <th scope="col">Net</th>
         </tr>
         <tr>
-          <td>by Hour</td>
+          <td>hour</td>
           <td><input ng-model='hg' ng-change="grossToNet('hour')"></td>
           <td><input ng-model='hn' ng-change="netToGross('hour')"></td>
         </tr>
         <tr>
-          <td>by Month</td>
+          <td>month</td>
           <td><input ng-model="mg" ng-change="grossToNet('month')"></td>
           <td><input ng-model="mn" ng-change="netToGross('month')"></td>
         </tr>
         <tr>
-          <td>by Year</td>
+          <td>year</td>
           <td><input ng-model="ag" ng-change="grossToNet('year')"></td>
           <td><input ng-model="an" ng-change="netToGross('year')"></td>
         </tr>
       </table>
-      <h4>Parameters</h4>
-      <table id="params">
+      <h3>Parameters</h3>
+      <table id="params" class="table table-condensed">
         <tr>
           <td>Hours per Week</td>
           <td><input type="number" min="1" max="168" ng-model="hw" ng-change="grossToNet('all')"></td>
@@ -47,9 +49,30 @@
           <td><input type="number" min="0" max="100" ng-model="tr" ng-change="grossToNet('all')"></td>
         </tr>
       </table>
-      <h4>Formulas</h4>
+      
+      <h3>Explanations</h3> 
+      <div class="alert alert-warning" role="alert">
+        $h_w$, $m_y$, $t_r$ are the computation parameters.<p>
+        Let $k = 1-\frac{t_r}{100}$ and $w_m = 52/m_y$, then the net values can be obtained from the annual gross value $a_G$ with the following equations :<p>
+        
+        $\left\{
+        \begin{array}{c}
+        m_G \cdot m_y = a_G \\
+        h_G \cdot h_w \cdot w_m = m_G \\
+        a_N = k \cdot a_G \\
+        m_N = k \cdot m_G \\
+        h_N = k \cdot h_G
+        \end{array}
+        \right.$ <p>
+        Values above are rounded to the nearest integer.
+      </div>
     </div>
 
     <script src="salaryController.js"></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+      });
+    </script>
   </body>
 </html>
