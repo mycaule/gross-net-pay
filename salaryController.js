@@ -1,7 +1,31 @@
 'use strict';
 
-function formatSalary(number) {
-  return Math.floor(number);
+angular.module('calculator', []).
+  controller('salaryController', salaryController);
+
+function roundAll(obj) {
+  obj.hg = Math.round(obj.hg);
+  obj.hn = Math.round(obj.hn);
+  obj.mg = Math.round(obj.mg);
+  obj.mn = Math.round(obj.mn);
+  obj.ag = Math.round(obj.ag);
+  obj.an = Math.round(obj.an);
+}
+
+function evalGross(obj) {
+  obj.hg = obj.hn/obj.k;
+  obj.mg = obj.mn/obj.k;
+  obj.ag = obj.an/obj.k;
+}
+
+function evalNet(obj) {
+  obj.hn = obj.hg*obj.k;
+  obj.mn = obj.mg*obj.k;
+  obj.an = obj.ag*obj.k;
+}
+
+function getGNFactor(rate) {
+  return 1-rate/100;
 }
 
 function salaryController($scope) {
@@ -13,74 +37,52 @@ function salaryController($scope) {
   
   // Computed values
   $scope.wm = 52/12;           // Average number of weeks/month
-  $scope.k = 1-$scope.tr/100;  // Gross to Net factor
+  $scope.k = getGNFactor($scope.tr);  // Gross to Net factor
 
-  $scope.mn = formatSalary($scope.mg*$scope.k);            // Net Monthly Salary
-  $scope.ag = formatSalary($scope.mg*$scope.my);           // Gross Annual Salary
-  $scope.an = formatSalary($scope.ag*$scope.k);            // Net Annual Salary
-  $scope.hg = formatSalary($scope.mg/$scope.wm/$scope.hw); // Gross Hourly Salary
-  $scope.hn = formatSalary($scope.hg*$scope.k);            // Gross Houryly Salary
+  $scope.mn = $scope.mg*$scope.k;            // Net Monthly Salary
+  $scope.ag = $scope.mg*$scope.my;           // Gross Annual Salary
+  $scope.an = $scope.ag*$scope.k;            // Net Annual Salary
+  $scope.hg = $scope.mg/$scope.wm/$scope.hw; // Gross Hourly Salary
+  $scope.hn = $scope.hg*$scope.k;            // Gross Houryly Salary
+  roundAll($scope);
 
   // TODO - Refactor
   $scope.grossToNet = function(type) {
+    if (type === 'all')
+      $scope.k = getGNFactor($scope.tr);
+
     if (type === 'hour') {
-      $scope.hn = formatSalary($scope.hg*$scope.k); // Update Net
-      $scope.mg = formatSalary($scope.hg*$scope.wm);
-      $scope.mn = formatSalary($scope.mg*$scope.k);
-      $scope.ag = formatSalary($scope.mg*$scope.my);
-      $scope.an = formatSalary($scope.ag*$scope.k);
+      $scope.mg = $scope.hg*$scope.hw*$scope.wm;
+      $scope.ag = $scope.mg*$scope.my;
 
     } else if (type === 'month') {
-      $scope.mn = formatSalary($scope.mg*$scope.k); // Update Net
-      $scope.ag = formatSalary($scope.mg*$scope.my);
-      $scope.an = formatSalary($scope.ag*$scope.k);
-      $scope.hg = formatSalary($scope.mg/$scope.wm/$scope.hw);
-      $scope.hn = formatSalary($scope.hg*$scope.k);
-
-    } else if (type === 'year') {
-      $scope.an = formatSalary($scope.ag*$scope.k); // Update Net
-      $scope.mg = formatSalary($scope.ag/$scope.my);
-      $scope.mn = formatSalary($scope.mg*$scope.k);
-      $scope.hg = formatSalary($scope.mg/$scope.wm/$scope.hw);
-      $scope.hn = formatSalary($scope.hg*$scope.k);
+      $scope.hg = $scope.mg/$scope.wm/$scope.hw;
+      $scope.ag = $scope.mg*$scope.my;
 
     } else {
-      $scope.k = 1+$scope.tr/100;                 // Update Gross to Net Factor
-      // Keep Annual Gross value, update others values
-      $scope.mg = formatSalary($scope.ag/$scope.my);
-      $scope.mn = formatSalary($scope.mg*$scope.k);
-      $scope.an = formatSalary($scope.ag*$scope.k);
-      $scope.hg = formatSalary($scope.mg/$scope.wm/$scope.hw);
-      $scope.hn = formatSalary($scope.hg*$scope.k);
+      $scope.mg = $scope.ag/$scope.my;
+      $scope.hg = $scope.mg/$scope.wm/$scope.hw;
+    } 
 
-    }
+    evalNet($scope);
+    roundAll($scope);
   };
 
   $scope.netToGross = function(type) {
     if (type === 'hour') {
-      $scope.hg = formatSalary($scope.hn/$scope.k); // Update Gross
-      $scope.mg = formatSalary($scope.hg*$scope.wm);
-      $scope.mn = formatSalary($scope.mg*$scope.k);
-      $scope.ag = formatSalary($scope.mg*$scope.my);
-      $scope.an = formatSalary($scope.ag*$scope.k);
+      $scope.mn = $scope.hn*$scope.hw*$scope.wm;
+      $scope.an = $scope.mn*$scope.my;
 
     } else if (type === 'month') {
-      $scope.mg = formatSalary($scope.mn/$scope.k); // Update Gross
-      $scope.ag = formatSalary($scope.mg*$scope.my);
-      $scope.an = formatSalary($scope.ag*$scope.k);
-      $scope.hg = formatSalary($scope.mg/$scope.wm/$scope.hw);
-      $scope.hn = formatSalary($scope.hg*$scope.k);
+      $scope.hn = $scope.mn/$scope.wm/$scope.hw;
+      $scope.an = $scope.mn*$scope.my;
 
-    } else if (type === 'year') {
-      $scope.ag = formatSalary($scope.an/$scope.k); // Update Gross
-      $scope.mg = formatSalary($scope.ag/$scope.my);
-      $scope.mn = formatSalary($scope.mg*$scope.k);
-      $scope.hg = formatSalary($scope.mg/$scope.wm/$scope.hw);
-      $scope.hn = formatSalary($scope.hg*$scope.k);
-
+    } else {
+      $scope.mn = $scope.an/$scope.my;
+      $scope.hn = $scope.mn/$scope.wm/$scope.hw;
     }
+
+    evalGross($scope);
+    roundAll($scope);
   };
 }
-
-var calculator = angular.module('calculator', []).
-    controller('salaryController', salaryController);

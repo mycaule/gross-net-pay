@@ -22,7 +22,8 @@ describe('GNP homepage', function() {
   }
 
   beforeEach(function() {
-    browser.get('http://mycaule.github.io/gross-net-pay/');
+    // browser.get('http://mycaule.github.io/gross-net-pay/');
+    browser.get('http://0.0.0.0:8080');
   });
 
   it('should have a title', function() {
@@ -79,5 +80,25 @@ describe('GNP homepage', function() {
     set(an, 21840);
     expect(get(hn)).toEqual('12');
     expect(get(mn)).toEqual('1820');
+  });
+
+  it('should update when params change', function() {
+    set(hw, 40);
+    set(hg, 12);
+    expect(get(mg)).toEqual('2080');
+
+    set(hn, 12);
+    expect(get(mn)).toEqual('2080');
+
+    set(ag, 40000);
+    set(tr, 25);
+    expect(get(an)).toEqual('30000');
+
+    // set(my, 14);
+    // set(hg, 14);
+    // expect(get(mg)).toEqual('2080');
+
+    // set(hn, 14);
+    // expect(get(mn)).toEqual('2080');
   });
 });
