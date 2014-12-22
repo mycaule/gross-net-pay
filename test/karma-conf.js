@@ -10,11 +10,11 @@ module.exports = function(config) {
     ],
     exclude: [],
 
-    browsers : ['Firefox'],
+    browsers : ['PhantomJS'],
     
     plugins: [
       'karma-jasmine',
-      'karma-firefox-launcher'
+      'karma-phantomjs-launcher'
     ],
     preprocessors: {},
     reporters: ['progress'],

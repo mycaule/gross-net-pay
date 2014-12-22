@@ -12,19 +12,19 @@
   "bugs": {
     "url": "https://github.com/mycaule/gross-net-pay/issues"
   },
-  "scripts": {  
+  "scripts": {
     "start": "http-server -a localhost -p 8000 -c-1",
-    "test": "node_modules/karma/bin/karma start test/karma-conf.js --browsers Firefox --single-run",
+    "test": "node_modules/karma/bin/karma start test/karma-conf.js",
     "protractor": "protractor spec/protractor-conf.js"
   },
   "devDependencies": {
     "karma": "~0.12.28",
+    "karma-jasmine": "~0.3.2",
+    "karma-phantomjs-launcher": "~0.1.4",
     "protractor": "~1.5.0",
     "http-server": "~0.7.4",
     "jasmine-core": "~2.1.3",
-    "karma-jasmine": "~0.3.2",
-    "karma-firefox-launcher": "~0.1.3",
-    "angular-mocks": "~1.3.8",
-    "angular": "~1.3.8"
+    "angular": "~1.3.8",
+    "angular-mocks": "~1.3.8"
   }
 }
