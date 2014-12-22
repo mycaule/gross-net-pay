@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "http-server -a localhost -p 8000 -c-1",
-    "test": "karma start test/karma-conf.js",
+    "test": "./node_modules/.bin/karma start test/karma-conf.js",
     "protractor": "protractor spec/protractor-conf.js"
   },
   "devDependencies": {
