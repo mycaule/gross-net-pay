@@ -12,9 +12,9 @@
   "bugs": {
     "url": "https://github.com/mycaule/gross-net-pay/issues"
   },
-  "scripts": {
+  "scripts": {  
     "start": "http-server -a localhost -p 8000 -c-1",
-    "test": "./node_modules/.bin/karma start test/karma-conf.js",
+    "test": "node_modules/karma/bin/karma start test/karma-conf.js",
     "protractor": "protractor spec/protractor-conf.js"
   },
   "devDependencies": {
