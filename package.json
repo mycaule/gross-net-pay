@@ -14,7 +14,7 @@
   },
   "scripts": {  
     "start": "http-server -a localhost -p 8000 -c-1",
-    "test": "node_modules/karma/bin/karma start test/karma-conf.js",
+    "test": "node_modules/karma/bin/karma start test/karma-conf.js --browsers Firefox --single-run",
     "protractor": "protractor spec/protractor-conf.js"
   },
   "devDependencies": {
