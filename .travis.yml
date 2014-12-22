@@ -1,7 +1,6 @@
 language: node_js
 
 node_js:
-  - "0.11"
   - "0.10"
 
 before_script:
@@ -12,5 +11,4 @@ before_script:
 
 #script:
 #  - "http-server -a localhost -p 8000 -c-1"
-#  - "./node_modules/.bin/karma start test/karma-conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox"
 #  - "./node_modules/.bin/protractor spec/protractor-conf.js --browser=firefox"
