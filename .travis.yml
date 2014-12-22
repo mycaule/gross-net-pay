@@ -1,8 +1,16 @@
 language: node_js
+
 node_js:
   - "0.10"
-before_install:
+
+before_script:
   - "export DISPLAY=:99:0"
   - "sh -e /etc/init.d/xvfb start"
-  - "npm install protractor -g"
-  - "webdriver-manager update"
+  - "npm start > /dev/null &"
+  - "npm run update-webdriver"
+  - "sleep 1"
+
+script:
+  - "start": "http-server -a localhost -p 8000 -c-1"
+  - "node_modules/.bin/karma start test/karma-conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox"
+  - "node_modules/.bin/protractor spec/protractor-conf.js --browser=firefox"

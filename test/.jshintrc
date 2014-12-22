@@ -1,0 +1,10 @@
+{
+  "predef": [
+    "it",
+    "inject",
+    "describe",
+    "beforeEach",
+    "afterEach"
+  ],
+  "jasmine": true
+}

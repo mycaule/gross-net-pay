@@ -24,6 +24,10 @@ function evalNet(obj) {
   obj.an = obj.ag*obj.k;
 }
 
+function getWM(NBmonths) {
+  return 52/NBmonths;
+}
+
 function getGNFactor(rate) {
   return 1-rate/100;
 }
@@ -36,7 +40,7 @@ function salaryController($scope) {
   $scope.my = 12;      // Number of months payed 
   
   // Computed values
-  $scope.wm = 52/12;           // Average number of weeks/month
+  $scope.wm = getWM($scope.my);       // Average number of weeks/month
   $scope.k = getGNFactor($scope.tr);  // Gross to Net factor
 
   $scope.mn = $scope.mg*$scope.k;            // Net Monthly Salary
@@ -48,8 +52,10 @@ function salaryController($scope) {
 
   // TODO - Refactor
   $scope.grossToNet = function(type) {
-    if (type === 'all')
+    if (type === 'all') {
+      $scope.wm = getWM($scope.my);
       $scope.k = getGNFactor($scope.tr);
+    }
 
     if (type === 'hour') {
       $scope.mg = $scope.hg*$scope.hw*$scope.wm;
