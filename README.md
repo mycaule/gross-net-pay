@@ -10,6 +10,8 @@ Made just for fun using AngularJS. [Use it here!](http://mycaule.github.io/gross
 
 ### Screenshot
 
+![screenshot.](https://github.com/mycaule/gross-net-pay/img/screenshot.png)
+
 ### Contributing
 [Changes and improvements](https://github.com/mycaule/gross-net-pay/wiki) are more than welcome! Feel free to fork and open a pull request. Please make your changes in a specific branch and request to pull into `master`!
 
