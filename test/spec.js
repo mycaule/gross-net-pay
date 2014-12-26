@@ -1,25 +1,13 @@
 'use strict';
 
 describe('calculator module', function() {
-
   var scope = {};
   var ctrl;
-  var translate;
 
   beforeEach(module('calculator'));
 
-  beforeEach(inject(function(_$translate_) {
-    translate = function() {
-      translate.spy.apply(this, arguments);
-    };
-    translate.spy = function() {};
-    spyOn(translate, 'spy').andCallFake(function() {
-      // dummy
-    });
-  }));
-
-  beforeEach(inject(function($rootScope, $controller) {
-    scope = $rootScope.$new();
+  beforeEach(inject(function($controller, $rootScope) {
+    scope = $rootScope.$new();    
     ctrl = $controller('salaryController', {$scope: scope});
   }));
 
