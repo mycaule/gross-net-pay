@@ -1,7 +1,46 @@
 'use strict';
 
-angular.module('calculator', []).
-  controller('salaryController', salaryController);
+var app = angular.module('calculator', ['pascalprecht.translate']);
+
+app.config(function($translateProvider) {
+  $translateProvider
+    .translations('en-US', {
+      TITLE: 'Calculate net pay from gross pay',
+      COUNTRY: 'Country: ',
+      SALARY: 'Pay by',
+      GROSS: 'Gross',
+      NET: 'Net',
+      HOURLY: 'hour',
+      MONTHLY: 'month',
+      ANNUALLY: 'year',
+      PARAMETERS: 'Parameters',
+      HOURS_PER_WEEK: 'hours per week',
+      MONTHS_PER_YEAR: 'months per year',
+      TAX_RATE: 'tax rate',
+      EXPLANATIONS: 'Show explanations',
+      VALUES_ROUNDED: 'Values above are rounded to the nearest integer.'
+    })
+    .translations('fr-FR', {
+      TITLE: 'Calcul du salaire brut en net',
+      COUNTRY: 'Pays : ',
+      SALARY: 'Salaire',
+      GROSS: 'Brut',
+      NET: 'Net',
+      HOURLY: 'horaire',
+      MONTHLY: 'mensuel',
+      ANNUALLY: 'annuel',
+      PARAMETERS: 'Paramètres',
+      HOURS_PER_WEEK: 'heures par semaine',
+      MONTHS_PER_YEAR: 'mois par ans',
+      TAX_RATE: 'charges salariales',
+      EXPLANATIONS: 'Explications',
+      VALUES_ROUNDED: 'Les valeurs ci-dessous sont arrondies à l\'entier le plus proche.'
+    });
+
+  $translateProvider.preferredLanguage('en-US');
+});
+
+app.controller('salaryController', salaryController);
 
 function roundAll(obj) {
   obj.hg = Math.round(obj.hg);
@@ -32,12 +71,22 @@ function getGNFactor(rate) {
   return 1-rate/100;
 }
 
-function salaryController($scope) {
+function salaryController($translate, $scope) {
   // Default values
   $scope.mg = 2500;    // Gross Monthly Salary
   $scope.hw = 35;      // Number of hours worked by week
   $scope.tr = 23;      // Percentage Tax Rate
-  $scope.my = 12;      // Number of months payed 
+  $scope.my = 12;      // Number of months payed
+
+  $scope.countries = [
+    { label: 'USA', value: 'en-US'},
+    { label: 'France', value: 'fr-FR'}
+  ];
+
+  $scope.country = $scope.countries[0];
+  
+  $scope.withExplain = false;
+
   
   // Computed values
   $scope.wm = getWM($scope.my);       // Average number of weeks/month
@@ -48,9 +97,9 @@ function salaryController($scope) {
   $scope.an = $scope.ag*$scope.k;            // Net Annual Salary
   $scope.hg = $scope.mg/$scope.wm/$scope.hw; // Gross Hourly Salary
   $scope.hn = $scope.hg*$scope.k;            // Gross Houryly Salary
+
   roundAll($scope);
 
-  // TODO - Refactor
   $scope.grossToNet = function(type) {
     if (type === 'all') {
       $scope.wm = getWM($scope.my);
@@ -90,5 +139,13 @@ function salaryController($scope) {
 
     evalGross($scope);
     roundAll($scope);
+  };
+
+  $scope.toggleExplain = function() {
+    $scope.withExplain = !$scope.withExplain;
+  };
+
+  $scope.setLang = function() {
+    $translate.use($scope.country.value);
   };
 }

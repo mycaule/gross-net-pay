@@ -1,59 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="calculator">
   <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <title>Calculate Net Pay from Gross Pay</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-    <script src="http://cdn.mathjax.org/mathjax/2.4-latest/MathJax.js?config=TeX-AMS_HTML">
+    <title>{{ 'TITLE' | translate }}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.5.2/angular-translate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.4.0/MathJax.js?config=TeX-AMS_HTML">
     </script>
   </head>
-  <body ng-app="calculator">
+  <body>
     <a href="https://github.com/mycaule/gross-net-pay"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
-    <div class="container" ng-controller="salaryController">
-      <h2>Calculate Net Pay from Gross Pay</h2>
+    <div class="container" ng-controller="salaryController">    
+      <h2>{{ 'TITLE' | translate }}</h2>
+
+      {{ 'COUNTRY' | translate }}
+      <select ng-model="country" ng-options="opt as opt.label for opt in countries" ng-change="setLang()"></select> 
+      <p>
+
       <table id="calc" class="table table-condensed">
         <tr>
-          <th scope="col">Pay by</th>
-          <th scope="col">Gross</th>
-          <th scope="col">Net</th>
+          <th>{{ 'SALARY' | translate }}</th>
+          <th>{{ 'GROSS' | translate }}</th>
+          <th>{{ 'NET' | translate }}</th>
         </tr>
         <tr>
-          <td>hour</td>
+          <td>{{ 'HOURLY' | translate }}</td>
           <td><input ng-model='hg' ng-change="grossToNet('hour')"></td>
           <td><input ng-model='hn' ng-change="netToGross('hour')"></td>
         </tr>
         <tr>
-          <td>month</td>
+          <td>{{ 'MONTHLY' | translate }}</td>
           <td><input ng-model="mg" ng-change="grossToNet('month')"></td>
           <td><input ng-model="mn" ng-change="netToGross('month')"></td>
         </tr>
         <tr>
-          <td>year</td>
+          <td>{{ 'ANNUALLY' | translate }}</td>
           <td><input ng-model="ag" ng-change="grossToNet('year')"></td>
           <td><input ng-model="an" ng-change="netToGross('year')"></td>
         </tr>
       </table>
-      <h3>Parameters</h3>
+      <h3>{{ 'PARAMETERS' | translate }}</h3>
       <table id="params" class="table table-condensed">
         <tr>
-          <td>Hours per Week</td>
+          <td>{{ 'HOURS_PER_WEEK' | translate }}</td>
           <td><input type="number" min="1" max="168" ng-model="hw" ng-change="grossToNet('all')"></td>
         </tr>
         <tr>
-          <td>Months per Year</td>
+          <td>{{ 'MONTHS_PER_YEAR' | translate }}</td>
           <td><input type="number" min="1" max="15" ng-model="my" ng-change="grossToNet('all')"></td>
         </tr>
         <tr>
-          <td>Tax Rate</td>
+          <td>{{ 'TAX_RATE' | translate }}</td>
           <td><input type="number" min="0" max="100" ng-model="tr" ng-change="grossToNet('all')"></td>
         </tr>
       </table>
       
-      <h3>Explanations</h3> 
-      <div class="alert alert-warning" role="alert">
+      <button class="btn btn-primary btn-sm" ng-class="{active: withExplain}" ng-click="toggleExplain()">{{ 'EXPLANATIONS' | translate }}</button><p>
+      <div class="alert alert-info" role="alert" ng-show="withExplain && country.value==='en-US'">
         $h_w$, $m_y$, $t_r$ are the computation parameters.<p>
-        Let $k = 1-\frac{t_r}{100}$ and $w_m = 52/m_y$, then the net values can be obtained from the annual gross value $a_G$ with the following equations :<p>
+        Let $k = 1-t_r/100$ and $w_m = 52/m_y$, then the net values can be obtained from the annual gross value $a_G$ with the following equations :<p>
         
         $\left\{
         \begin{array}{c}
@@ -65,6 +72,21 @@
         \end{array}
         \right.$ <p>
         Values above are rounded to the nearest integer.
+      </div>
+      <div class="alert alert-info" role="alert" ng-show="withExplain && country.value==='fr-FR'">
+        $h_w$, $m_y$, $t_r$ sont les paramètres de calcul.<p>
+        Soit $k = 1-t_r/100$ et $w_m = 52/m_y$, alors les valeurs net sont obtenues à partir des valeurs brutes $a_G$ à travers les équations suivantes :<p>
+        
+        $\left\{
+        \begin{array}{c}
+        m_G \cdot m_y = a_G \\
+        h_G \cdot h_w \cdot w_m = m_G \\
+        a_N = k \cdot a_G \\
+        m_N = k \cdot m_G \\
+        h_N = k \cdot h_G
+        \end{array}
+        \right.$ <p>
+        Les valeurs sont arrondies à l'entier le plus proche.
       </div>
     </div>
 
