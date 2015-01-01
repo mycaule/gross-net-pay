@@ -11,7 +11,9 @@ app.config(function($translateProvider) {
   $translateProvider
     .translations('en-US', {
       TITLE: 'Calculate net pay from gross pay',
-      COUNTRY: 'Country: ',
+      DESCRIPTION1: 'Easily calculate a net salary from a gross value.',
+      DESCRIPTION2: 'Tax rates may vary depending on your job, salary, location or age.',
+      COUNTRY: 'country',
       SALARY: 'Pay by',
       GROSS: 'Gross',
       NET: 'Net',
@@ -27,7 +29,9 @@ app.config(function($translateProvider) {
     })
     .translations('fr-FR', {
       TITLE: 'Calcul du salaire brut en net',
-      COUNTRY: 'Pays : ',
+      DESCRIPTION1: 'Calculez facilement un salaire net à partir d\'un montant brut.',
+      DESCRIPTION2: 'Les charges salariales varient en fonction du status, du salaire, de la localisation ou de l\'âge.',
+      COUNTRY: 'pays',
       SALARY: 'Salaire',
       GROSS: 'Brut',
       NET: 'Net',
