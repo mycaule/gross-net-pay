@@ -1,6 +1,11 @@
 'use strict';
 
-var app = angular.module('calculator', ['pascalprecht.translate']);
+var lodash = angular.module('lodash', []);
+lodash.factory('_', function() {
+  return window._;
+})
+
+var app = angular.module('calculator', ['pascalprecht.translate', 'ngCookies', 'lodash']);
 
 app.config(function($translateProvider) {
   $translateProvider
@@ -71,7 +76,9 @@ function getGNFactor(rate) {
   return 1-rate/100;
 }
 
-function salaryController($translate, $scope) {
+function salaryController($translate, $cookies, $scope, _) {
+  $scope.favCountry = $cookies.favCountry;
+
   // Default values
   $scope.mg = 2500;    // Gross Monthly Salary
   $scope.hw = 35;      // Number of hours worked by week
@@ -82,8 +89,10 @@ function salaryController($translate, $scope) {
     { label: 'USA', value: 'en-US'},
     { label: 'France', value: 'fr-FR'}
   ];
+  var defCountry = _.find($scope.countries, {value: $cookies.favCountry});
 
-  $scope.country = $scope.countries[0];
+  $scope.country = defCountry ? defCountry : $scope.countries[0];
+  $translate.use($scope.country.value);
   
   $scope.withExplain = false;
 
@@ -146,6 +155,7 @@ function salaryController($translate, $scope) {
   };
 
   $scope.setLang = function() {
+    $cookies.favCountry = $scope.country.value;
     $translate.use($scope.country.value);
   };
 }
