@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <style>
+      .table-nonfluid {
+        width: auto;
+      }
+    </style>
+
     <title>{{ 'TITLE' | translate }}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.5.2/angular-translate.min.js"></script>
@@ -16,12 +22,13 @@
     <a href="https://github.com/mycaule/gross-net-pay"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
     <div class="container" ng-controller="salaryController">    
       <h2>{{ 'TITLE' | translate }}</h2>
-
-      {{ 'COUNTRY' | translate }}
-      <select ng-model="country" ng-options="opt as opt.label for opt in countries" ng-change="setLang()"></select> 
-      <p>
-
-      <table id="calc" class="table table-condensed">
+      
+      <div class="alert alert-info" role="alert">
+        {{ 'DESCRIPTION1' | translate }}<p>
+        {{ 'DESCRIPTION2' | translate }}
+      </div>
+  
+      <table id="calc" class="table table-condensed table-nonfluid">
         <tr>
           <th>{{ 'SALARY' | translate }}</th>
           <th>{{ 'GROSS' | translate }}</th>
@@ -43,8 +50,14 @@
           <td><input ng-model="an" ng-change="netToGross('year')"></td>
         </tr>
       </table>
-      <h3>{{ 'PARAMETERS' | translate }}</h3>
-      <table id="params" class="table table-condensed">
+      <table id="params" class="table table-condensed table-nonfluid">
+        <tr>
+          <th>{{ 'PARAMETERS' | translate }}</th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>{{ 'COUNTRY' | translate }}</td><td><select ng-model="country" ng-options="opt as opt.label for opt in countries" ng-change="setLang()"></select></td>
+        </tr>
         <tr>
           <td>{{ 'HOURS_PER_WEEK' | translate }}</td>
           <td><input type="number" min="1" max="168" ng-model="hw" ng-change="grossToNet('all')"></td>
