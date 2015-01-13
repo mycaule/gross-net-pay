@@ -6,8 +6,6 @@ Calculate Net Pay from Gross Pay and *vice versa*.
 
 Made just for fun using AngularJS. [Use it here!](http://mycaule.github.io/gross-net-pay/)
 
-### Contributions
-
 ### Screenshot
 
 ![screenshot](https://raw.github.com/mycaule/gross-net-pay/master/img/screenshot.png)
